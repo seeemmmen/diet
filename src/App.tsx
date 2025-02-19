@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route,  Link } from 'react-router-dom';
 import "./style/mainpage.css";
 import './App.css';
 import happyCustomers from './img/mainpage/happy-customers.svg';

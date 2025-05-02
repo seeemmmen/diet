@@ -1,6 +1,6 @@
 import "./style/mainpage.css";
 import './App.css';
-import { BrowserRouter as Router, Routes, Route ,Navigate } from 'react-router-dom';
+import {Routes, Route ,Navigate } from 'react-router-dom';
 import Layout from './components/layout.tsx';       // С header и footer
 import Signup from './components/signup.tsx';    // Отдельная страница без оформления
 import HomePage from './components/homePage.tsx';        // Главная с контентом

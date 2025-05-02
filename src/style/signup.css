@@ -1,0 +1,80 @@
+@import"https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Marcellus&family=Tiro+Devanagari+Sanskrit:ital@0;1&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap";* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+}
+
+    .main{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.regestration{
+    display: flex;
+}
+header{
+    margin-bottom: 150px;
+
+}
+.logo-header{
+    margin-right: 300px;
+}
+.right{
+    margin-left: 240px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+.welcome{
+    margin-top: 26px;
+}
+.welcome p{
+    font-family: Urbanist,sans-serif;
+    font-weight: 400;
+    font-size: 24px
+}
+.welcome span{
+    color:#4F772D;
+}
+.register-button{
+    margin-top: 26px;
+
+    background-color: #F7FFE3;
+    width: 340px;
+    height: 50px;
+    border-radius: 25px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+
+}
+.register-button p {
+    padding: 14px;
+    font-size: 20px;
+    transition: background-color .3s ease-in-out,
+    color .3s ease-in-out,
+    border-radius .3s ease-in-out,
+    width .3s ease-in-out,
+    height .3s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* Add initial values for smooth transition */
+    background-color: transparent;
+    color: #000;
+    border-radius: 5px;
+    width: 130px;
+    height: 35px;
+}
+
+.register-button p:hover {
+    background-color: #4F772D;
+    color: #fff;
+    border-radius: 17px;
+    width: 150px;
+    height: 37px;
+}

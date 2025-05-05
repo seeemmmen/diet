@@ -4,6 +4,7 @@ import {Routes, Route ,Navigate } from 'react-router-dom';
 import Layout from './components/layout.tsx';       // С header и footer
 import Signup from './components/signup.tsx';    // Отдельная страница без оформления
 import HomePage from './components/homePage.tsx';        // Главная с контентом
+import Quastions from "./components/quastions.tsx";
 function App() {
     return (
 
@@ -12,7 +13,7 @@ function App() {
                 <Route path="/home" element={<HomePage />} />
             </Route>
             <Route path="/" element={<Navigate to="/home" />} />
-
+            <Route path="/quastions" element={<Quastions />} />;
             <Route path="/signup" element={<Signup />} />
             <Route path="*" element={<div>Страница не найдена</div>} />
         </Routes>

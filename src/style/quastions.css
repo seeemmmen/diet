@@ -1,0 +1,46 @@
+@import"https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Marcellus&family=Tiro+Devanagari+Sanskrit:ital@0;1&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap";* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+}
+.logobig{
+    margin: 0 auto;
+    display: block;
+    margin-top: 25px;
+}
+.box-quastions{
+   display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 180px;
+}
+.box-quastions h1{
+    font-family: Urbanist,sans-serif;
+    font-weight: 600;
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+.box-quastions li{
+    font-family: Urbanist,sans-serif;
+    font-weight: 400;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+    font-size: 32px;
+    text-align: left;
+    width: 700px;
+    height: 96px;
+    background-color: #F0F0F0;
+    border-radius: 26px;
+}
+.box-quastions ul{
+    margin-top: 65px;
+}
+.box-quastions p{
+    font-family: Urbanist,sans-serif;
+    font-weight: 400;
+    font-size: 32px;
+}

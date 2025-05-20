@@ -44,3 +44,59 @@
     font-weight: 400;
     font-size: 32px;
 }
+.CircularProgressbar {
+    margin-top: 100px;
+}
+.login_button{
+    height: 50px;
+    border-radius: 25px;
+    width: 340px;
+    border: none;
+    color: black;
+    background-color: #4F772D;
+    position: relative;
+    overflow: hidden;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+
+}
+.ready{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 180px;
+    gap: 30px;
+    flex-direction: column;
+    animation: entarance 1s ease-out both;
+}
+.ready h2{
+    font-family: Urbanist,sans-serif;
+    font-weight: 600;
+    font-size: 48px;
+}
+.ready p{
+    font-family: Urbanist,sans-serif;
+    font-weight: 400;
+    font-size: 32px;
+}
+@keyframes animate {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+@keyframes entarance {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.hidden{
+     animation: animate 1s ease-out both;
+}

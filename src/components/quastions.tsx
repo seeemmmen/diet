@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import logobig from '../img/quastions/logobig.svg';
 import '../style/quastions.css';
-import { useNavigate } from 'react-router-dom';
+import 'react-circular-progressbar/dist/styles.css';
+import AnimatedProgress from "./AnimatedProgress.tsx";
+
 
 function Quastions() {
     const [selectedAnswers, setSelectedAnswers] = useState({});
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const quastions = [
         {
@@ -106,14 +108,11 @@ function Quastions() {
                     {isSubmitting && <p>Saving answer...</p>}
                 </div>
             ) : (
-                <div className="box-quastions">
-                    <h1>Thank you so much for completing the quiz! 💚</h1>
-                    <p style={{marginTop:"32px"}}>We’re now preparing your personalized diet plan based on your answers.</p>
-                    <button onClick={()=>navigate("/signup")}>Login in</button>
-                </div>
+                <AnimatedProgress />
             )}
 
         </div>
+
 
     );
 }

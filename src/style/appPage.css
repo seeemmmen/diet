@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import"https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Marcellus&family=Tiro+Devanagari+Sanskrit:ital@0;1&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Tiro+Devanagari+Sanskrit:ital@0;1&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+}
+.app-header{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    height: auto;
+    box-shadow: 0px 20px 20px -1px rgba(66, 68, 90, 0.69);
+}
+.app-menu li {
+    list-style: none;
+    font-family: Urbanist,sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    color: black;
+    text-decoration: none;
+
+
+}
+.app-menu a{
+    text-decoration: none;
+}
+.app-menu{
+    display: flex;
+    gap: 50px;
+
+}
+.hello_h1{
+    font-family: Urbanist,sans-serif;
+    font-weight: 600;
+    font-size: 38px;
+    text-align: center;
+}
+.hello_h1 span{
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: italic;
+    color: #4F772D;
+}
+.app-user{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}

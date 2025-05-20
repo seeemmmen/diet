@@ -4,17 +4,11 @@ import login_picture from '../img/signup/login_picture.svg'
 import { useState, useEffect } from 'react';
 import * as React from "react";
 import {useNavigate} from 'react-router-dom';
+import 'react-circular-progressbar/dist/styles.css';
+import Loadingpage from "./Loadingpage.tsx";
 
 
 
-
-function Loadingpage({ loading }: { loading: boolean }) {
-    return (
-        <div className={`loading-screen ${loading ? 'visible' : 'hidden'}`}>
-            <div className="loader"></div>
-        </div>
-    );
-}
 
 
 function Signup() {
@@ -55,6 +49,7 @@ function Signup() {
                 if (response.ok) {
                     localStorage.setItem('token', data.token);
                     setMessage(data.message);
+                    navigate('/app');
                     if (!isLogin){
                         navigate('/quastions');
                     }

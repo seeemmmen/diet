@@ -5,6 +5,8 @@ import flower from "../img/mainpage/flower.svg";
 import guidance from "../img/mainpage/guidance.svg";
 import food from "../img/mainpage/food.svg";
 import meal from "../img/mainpage/meal.svg";
+import "../style/mainpage.css";
+
 
 function HomePage() {
     return(

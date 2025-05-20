@@ -7,7 +7,6 @@ const jwt = require('jsonwebtoken');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Подключаем статику из папки dist
 app.use(express.static(path.join(__dirname, 'dist')));
 
 mongoose.connect('mongodb+srv://seeemmmen:Parol2017@web.omhac.mongodb.net/users?retryWrites=true&w=majority&appName=Web');
@@ -93,7 +92,6 @@ app.get('/api/user', verifyToken, async (req, res) => {
     }
 });
 
-// Маршрут для сохранения ответов
 app.post('/api/answers', verifyToken, async (req, res) => {
     try {
         const user = await User.findOne({ email: req.user.email });
@@ -110,12 +108,22 @@ app.post('/api/answers', verifyToken, async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+app.get('/api/user', verifyToken, async (req, res) => {
+    try {
+        const user = await User.findOne({ email: req.user.email });
+        if (!user) {
+            return res.status(404).json({ error: 'Пользователь не найден' });
+        }
+        res.status(200).json({ username: user.username, email: user.email });
+    } catch (error) {
+        res.status(500).json({ error: 'Внутренняя ошибка сервера' });
+    }
+});
 
 app.get('/', (req, res) => {
     res.send('Welcome to my User Registration and Login API!');
 });
 
-// Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

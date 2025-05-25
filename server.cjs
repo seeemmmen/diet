@@ -61,7 +61,6 @@ const Activity = mongoose.model('Activity', activitySchema);
 
 app.use(express.json());
 
-// Middleware для верификации токена
 const verifyToken = (req, res, next) => {
     const token = req.headers['authorization'];
     if (!token) {
@@ -77,7 +76,6 @@ const verifyToken = (req, res, next) => {
     });
 };
 
-// Регистрация
 app.post('/api/register', async (req, res) => {
     try {
         const existingUser = await User.findOne({ email: req.body.email });
@@ -101,7 +99,6 @@ app.post('/api/register', async (req, res) => {
     }
 });
 
-// Логин
 app.post('/api/login', async (req, res) => {
     try {
         const user = await User.findOne({ email: req.body.email });
@@ -121,7 +118,6 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
-// Получение данных пользователя
 app.get('/api/user', verifyToken, async (req, res) => {
     try {
         const user = await User.findOne({ email: req.user.email });
@@ -134,7 +130,6 @@ app.get('/api/user', verifyToken, async (req, res) => {
     }
 });
 
-// Сохранение ответов
 app.post('/api/answers', verifyToken, async (req, res) => {
     try {
         const user = await User.findOne({ email: req.user.email });
@@ -151,7 +146,6 @@ app.post('/api/answers', verifyToken, async (req, res) => {
     }
 });
 
-// Маршруты для прогресса
 app.get('/api/progress', verifyToken, async (req, res) => {
     try {
         const progress = await Progress.findOne({ userEmail: req.user.email }).sort({ date: -1 });
@@ -252,7 +246,6 @@ app.post('/api/water', verifyToken, async (req, res) => {
     }
 });
 
-// Маршруты для активности
 app.get('/api/activity', verifyToken, async (req, res) => {
     try {
         const activities = await Activity.find({ userEmail: req.user.email }).sort({ date: -1 }).limit(5);
@@ -289,7 +282,7 @@ app.post('/api/activity', verifyToken, async (req, res) => {
 
 app.get('/api/search-food', verifyToken, async (req, res) => {
     try {
-        const query = req.query.q; // Поисковый запрос (название еды)
+        const query = req.query.q;
         if (!query) {
             return res.status(400).json({ error: 'Query parameter "q" is required' });
         }

@@ -50,7 +50,7 @@ function AppPage() {
                 return;
             }
 
-            const userResponse = await fetch("http://localhost:3000/api/user", {
+            const userResponse = await fetch("/api/user", {
                 method: "GET",
                 headers: {
                     Authorization: token,
@@ -62,7 +62,7 @@ function AppPage() {
             const userData = await userResponse.json();
             setUser(userData);
 
-            const progressResponse = await fetch("http://localhost:3000/api/progress", {
+            const progressResponse = await fetch("/api/progress", {
                 method: "GET",
                 headers: {
                     Authorization: token,
@@ -73,7 +73,7 @@ function AppPage() {
             const progressData = await progressResponse.json();
             setProgress(progressData);
 
-            const mealsResponse = await fetch("http://localhost:3000/api/meals", {
+            const mealsResponse = await fetch("/api/meals", {
                 method: "GET",
                 headers: {
                     Authorization: token,
@@ -84,7 +84,7 @@ function AppPage() {
             const mealsData = await mealsResponse.json();
             setMeals(mealsData);
 
-            const waterResponse = await fetch("http://localhost:3000/api/water", {
+            const waterResponse = await fetch("/api/water", {
                 method: "GET",
                 headers: {
                     Authorization: token,
@@ -95,7 +95,7 @@ function AppPage() {
             const waterData = await waterResponse.json();
             setWaterCount(waterData.count);
 
-            const activityResponse = await fetch("http://localhost:3000/api/activity", {
+            const activityResponse = await fetch("/api/activity", {
                 method: "GET",
                 headers: {
                     Authorization: token,
@@ -122,7 +122,7 @@ function AppPage() {
     const handleAddWater = async () => {
         const token = localStorage.getItem("token");
         try {
-            const response = await fetch("http://localhost:3000/api/water", {
+            const response = await fetch("/api/water", {
                 method: "POST",
                 headers: {
                     Authorization: token!,
@@ -142,7 +142,7 @@ function AppPage() {
         if (!token || !searchQuery) return;
 
         try {
-            const response = await fetch(`http://localhost:3000/api/search-food?q=${encodeURIComponent(searchQuery)}`, {
+            const response = await fetch(`/api/search-food?q=${encodeURIComponent(searchQuery)}`, {
                 method: "GET",
                 headers: {
                     Authorization: token,
@@ -162,7 +162,7 @@ function AppPage() {
         if (!token) return;
 
         try {
-            const response = await fetch("http://localhost:3000/api/meals", {
+            const response = await fetch("/api/meals", {
                 method: "POST",
                 headers: {
                     Authorization: token,
@@ -175,8 +175,8 @@ function AppPage() {
                 }),
             });
             if (!response.ok) throw new Error("Failed to add meal");
-            await fetchData(); // Обновляем список приёмов пищи
-            setSearchResults([]); // Сбрасываем результаты поиска
+            await fetchData();
+            setSearchResults([]);
         } catch (error) {
             console.error(error);
         }

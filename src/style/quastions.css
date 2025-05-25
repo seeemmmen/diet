@@ -100,3 +100,21 @@
 .hidden{
      animation: animate 1s ease-out both;
 }
+@media (max-width: 480px) {
+    .box-quastions{
+        padding: 10px;
+    }
+    .box-quastions li{
+        font-size: 24px;
+        width: 300px;
+        height: 60px;
+        padding: 20px;
+    }
+    .ready{
+        padding: 15px;
+    }
+    .box-quastions h1 {
+        font-size: 35px;
+    }
+
+}

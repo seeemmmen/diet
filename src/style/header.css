@@ -1,0 +1,224 @@
+/* header.css */
+@import "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Marcellus&family=Tiro+Devanagari+Sanskrit:ital@0;1&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Десктопный хедер */
+header {
+    padding: 20px 5%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo-header {
+    width: 101px;
+    height: 71px;
+}
+
+.logo-header img {
+    width: 100%;
+    height: auto;
+}
+
+.desktop-nav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 50px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.link {
+    font-family: Ubuntu, sans-serif;
+    text-decoration: none;
+    color: #000;
+    font-weight: 400;
+    font-size: 15px;
+}
+
+.sign-up {
+    background-color: #4f772d;
+    width: 70px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 30px;
+    color: #fff;
+    font-family: Ubuntu, sans-serif;
+    text-decoration: none;
+    font-weight: 400;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sign-up:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+.hover-underline-animation {
+    display: inline-block;
+    position: relative;
+}
+
+.hover-underline-animation:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #4f772d;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+.hover-underline-animation:hover:after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+/* Мобильное меню */
+.menunav {
+    display: none;
+    cursor: pointer;
+}
+
+.menunav img {
+    width: 20px;
+    height: auto;
+}
+
+.mobile-nav {
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    z-index: 1000;
+    padding: 20px;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease-in-out;
+    align-items: center;
+    justify-content: flex-start;
+    display: none;
+}
+
+.mobile-nav.active {
+    display: flex;
+    transform: translateY(0);
+}
+
+.mobile-nav-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.logo-header {
+    width: 80px;
+    height: auto;
+}
+
+.close-icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    z-index: 1001;
+}
+
+.mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-right: 220px;
+    width: 130px;
+}
+
+.mobile-nav-links .link {
+    font-size: 18px;
+    color: #000;
+    text-decoration: none;
+}
+
+.mobile-login-btn {
+    height: 50px;
+    width: 150px;
+    border-radius: 25px;
+    border: none;
+    color: #fff;
+    background-color: #4f772d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Urbanist, sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    text-decoration: none;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.3s ease;
+    margin-top: 153px;
+}
+
+.mobile-login-btn:hover {
+    background-color: #6b8b2d;
+}
+
+/* Градиентный фон снизу */
+.mobile-nav::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #d4e4d2);
+    z-index: -1;
+}
+
+/* Медиа-запросы */
+@media (max-width: 768px) {
+    .menunav {
+        display: block;
+    }
+
+    .desktop-nav {
+        display: none !important;
+    }
+
+    .bowl-eating {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .mobile-nav-links .link {
+        font-size: 24px;
+    }
+
+    .mobile-login-btn {
+        width: 130px;
+        font-size: 16px;
+    }
+
+    .logo-header {
+        margin-right: 245px;
+    }
+}

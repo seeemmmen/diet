@@ -10,7 +10,7 @@ import goTop from "../img/mainpage/go-top.svg";
 function Footer() {
     return(
         <>
-            <footer>
+            <footer id="footer">
                 <div className="footer">
                     <img src={logo_header} alt=""  style={{marginTop: "64px"}}/>
                     <p className="description" style={{marginTop: "16px"}}>Personalized nutrition plans</p>

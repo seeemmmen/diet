@@ -14,6 +14,7 @@
 }
 .regestration{
     display: flex;
+    flex-wrap: wrap;
 }
 header{
     margin-bottom: 150px;
@@ -22,6 +23,7 @@ header{
 .logo-header{
     margin-right: 300px;
 }
+
 .right{
     margin-left: 240px;
     display: flex;
@@ -171,4 +173,30 @@ header{
     font-weight: 400;
     font-style: normal;
     font-size: 16px;
+}
+@media (max-width: 480px) {
+    .photo{
+        display: none;
+    }
+    .logo-header img{
+        margin-right: 245px;
+    }
+    .mobile-nav-links .link {
+        font-size: 24px;
+    }
+
+    .mobile-login-btn {
+        width: 130px;
+        font-size: 16px;
+    }
+
+    .logo-header {
+        margin-right: 245px;
+    }
+    .right{
+        margin-left: 0px;
+    }
+    header{
+        display: none;
+    }
 }

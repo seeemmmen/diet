@@ -9,7 +9,7 @@ function LogoutButton() {
     }
 
     return(
-        <img src={logout} onClick={handleLogout} width="30px" alt=""/>
+        <img src={logout} onClick={handleLogout}  alt=""/>
     );
 }
 export default LogoutButton;

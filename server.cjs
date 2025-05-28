@@ -20,6 +20,8 @@ const userSchema = new mongoose.Schema({
     username: String,
     email: String,
     password: String,
+    name: { type: String, default: "Write please" },
+    phone: { type: String, default: "Write please" },
     answers: { type: Object, default: {} }
 });
 
@@ -53,11 +55,27 @@ const activitySchema = new mongoose.Schema({
     date: { type: Date, default: Date.now }
 });
 
+const healthGoalsSchema = new mongoose.Schema({
+    userEmail: String,
+    current: {
+        weight: { type: String, default: "Write please" },
+        water: { type: String, default: "Write please" },
+        calories: { type: String, default: "Write please" }
+    },
+    target: {
+        weight: { type: String, default: "Write please" },
+        water: { type: String, default: "Write please" },
+        calories: { type: String, default: "Write please" }
+    },
+    date: { type: Date, default: Date.now }
+});
+
 const User = mongoose.model('User', userSchema, 'custom_users');
 const Progress = mongoose.model('Progress', progressSchema);
 const Meal = mongoose.model('Meal', mealSchema);
 const Water = mongoose.model('Water', waterSchema);
 const Activity = mongoose.model('Activity', activitySchema);
+const HealthGoals = mongoose.model('HealthGoals', healthGoalsSchema);
 
 app.use(express.json());
 
@@ -88,7 +106,9 @@ app.post('/api/register', async (req, res) => {
         const newUser = new User({
             username: req.body.username,
             email: req.body.email,
-            password: hashedPassword
+            password: hashedPassword,
+            name: "Write please",
+            phone: "Write please"
         });
 
         await newUser.save();
@@ -124,9 +144,27 @@ app.get('/api/user', verifyToken, async (req, res) => {
         if (!user) {
             return res.status(404).json({ error: 'Пользователь не найден' });
         }
-        res.status(200).json({ username: user.username, email: user.email });
+        res.status(200).json({ username: user.username, email: user.email, name: user.name, phone: user.phone });
     } catch (error) {
         res.status(500).json({ error: 'Внутренняя ошибка сервера' });
+    }
+});
+
+app.post('/api/user', verifyToken, async (req, res) => {
+    try {
+        const user = await User.findOne({ email: req.user.email });
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        user.email = req.body.email || user.email;
+        user.name = req.body.name || user.name;
+        user.phone = req.body.phone || user.phone;
+        await user.save();
+
+        res.status(200).json({ message: 'User data updated successfully' });
+    } catch (error) {
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
@@ -298,6 +336,44 @@ app.get('/api/search-food', verifyToken, async (req, res) => {
     } catch (error) {
         console.error('Error fetching food data:', error.response ? error.response.data : error.message);
         res.status(500).json({ error: 'Failed to fetch food data' });
+    }
+});
+
+app.get('/api/health-goals', verifyToken, async (req, res) => {
+    try {
+        const goals = await HealthGoals.findOne({ userEmail: req.user.email }).sort({ date: -1 });
+        if (!goals) {
+            const defaultGoals = new HealthGoals({
+                userEmail: req.user.email,
+                current: { weight: "Write please", water: "Write please", calories: "Write please" },
+                target: { weight: "Write please", water: "Write please", calories: "Write please" }
+            });
+            await defaultGoals.save();
+            return res.status(200).json({
+                current: defaultGoals.current,
+                target: defaultGoals.target
+            });
+        }
+        res.status(200).json({
+            current: goals.current,
+            target: goals.target
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+app.post('/api/health-goals', verifyToken, async (req, res) => {
+    try {
+        const newGoals = new HealthGoals({
+            userEmail: req.user.email,
+            current: req.body.current || { weight: "Write please", water: "Write please", calories: "Write please" },
+            target: req.body.target || { weight: "Write please", water: "Write please", calories: "Write please" }
+        });
+        await newGoals.save();
+        res.status(200).json({ message: 'Health goals updated successfully' });
+    } catch (error) {
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 

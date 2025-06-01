@@ -1,5 +1,5 @@
 import '../style/settings.css';
-import avatar from '../img/app/avatar.svg';
+import avatar from '../img/app/avatar.png';
 import { useEffect, useState } from 'react';
 
 interface User {

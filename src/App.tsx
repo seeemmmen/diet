@@ -9,6 +9,8 @@ import AppPage from './components/appPage.tsx';
 import Layout_app from './components/layout-app.tsx';
 import Settings from './components/settings.tsx';
 import Loadingpage from './components/Loadingpage.tsx';
+import Progress from './components/progress.tsx';
+import MealsComponent   from "./components/meals.tsx";
 
 function App() {
     const [loading, setLoading] = useState(true);
@@ -68,7 +70,14 @@ function App() {
             <Route element={<Layout_app />}>
                 <Route path="/app/settings" element={<Settings/>} />
             </Route>
+            <Route element={<Layout_app />}>
+                <Route path="/app/progress" element={<Progress/>} />
+            </Route>
+            <Route element={<Layout_app />}>
+                <Route path="/app/recipes" element={<MealsComponent/>} />
+            </Route>
             <Route path="*" element={<div>Страница не найдена</div>} />
+
         </Routes>
     );
 }

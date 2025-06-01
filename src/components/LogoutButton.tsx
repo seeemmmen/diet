@@ -1,5 +1,5 @@
 import {useNavigate} from 'react-router-dom';
-import logout from '../img/app/logout.svg';
+import logout from '../img/app/logout.png';
 
 function LogoutButton() {
     const navigate = useNavigate();

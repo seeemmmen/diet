@@ -10,12 +10,10 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
-// Подключение к MongoDB
 mongoose.connect('mongodb+srv://seeemmmen:Parol2017@web.omhac.mongodb.net/users?retryWrites=true&w=majority&appName=Web')
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.error('MongoDB connection error:', err));
 
-// Схемы и модели
 const userSchema = new mongoose.Schema({
     username: String,
     email: String,

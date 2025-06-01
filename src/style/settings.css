@@ -6,7 +6,9 @@
     box-sizing: border-box;
 }
 
-header {}
+body {
+    background: white;
+}
 
 .settings {
     display: flex;

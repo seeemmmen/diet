@@ -139,12 +139,11 @@ header {
     gap: 15px;
 }
 
-.app-user img {
-    width: 40px;
-    height: 40px;
-}
+/*.app-user img {*/
+/*    width: 40px;*/
+/*    height: 40px;*/
+/*}*/
 
-/* Новые стили для контента */
 .subheading {
     font-family: Urbanist, sans-serif;
     font-size: 18px;
@@ -280,6 +279,7 @@ header {
     padding: 10px;
     border-radius: 10px;
     margin-bottom: 10px;
+    font-family: Urbanist, sans-serif;
 }
 
 .meal:nth-child(1) {

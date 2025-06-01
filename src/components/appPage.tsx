@@ -33,7 +33,7 @@ interface Food {
 }
 
 function AppPage() {
-    const [user, setUser] = useState<{ username: string; email: string } | null>(null);
+    const [user, setUser] = useState<{ username: string; email: string ; name: string } | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [progress, setProgress] = useState<Progress | null>(null);
     const [meals, setMeals] = useState<Meal[]>([]);
@@ -61,6 +61,7 @@ function AppPage() {
             if (!userResponse.ok) throw new Error("Failed to fetch user data");
             const userData = await userResponse.json();
             setUser(userData);
+            console.log(userData);
 
             const progressResponse = await fetch("/api/progress", {
                 method: "GET",
@@ -208,7 +209,7 @@ function AppPage() {
             <Sidebar />
             <div className="main-content">
                 <h1 className="hello_h1">
-                    Hi, <span>{user?.username || "Guest"}!</span>
+                    Hi, <span>{user?.name || "Guest"}!</span>
                 </h1>
                 <p className="subheading">Here's your personalized plan for today.</p>
                 <div className="search-bar">
@@ -269,11 +270,7 @@ function AppPage() {
                             <div key={index} className="meal">
                                 <span className="meal-icon">🍽️</span>
                                 <span>{meal.name}</span>
-                                <span>{meal.calories} kcal</span>
                                 <img src={meal.image} alt={meal.name} className="meal-image" />
-                                <Link to="/add-meal">
-                                    <button className="add-button">+</button>
-                                </Link>
                             </div>
                         ))}
                     </div>

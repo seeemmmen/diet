@@ -374,6 +374,44 @@ app.post('/api/health-goals', verifyToken, async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+app.get('/api/recipe-details', verifyToken, async (req, res) => {
+    try {
+        const mealName = req.query.name;
+        if (!mealName) {
+            return res.status(400).json({ error: 'Query parameter "name" is required' });
+        }
+
+        const response = await axios.get(`https://www.themealdb.com/api/json/v1/1/search.php?s=${encodeURIComponent(mealName)}`);
+        const meal = response.data.meals && response.data.meals.length > 0 ? response.data.meals[0] : null;
+
+        if (!meal) {
+            return res.status(404).json({ error: 'Recipe not found' });
+        }
+
+        // Extract ingredients and measurements
+        const ingredients = [];
+        for (let i = 1; i <= 20; i++) {
+            const ingredient = meal[`strIngredient${i}`];
+            const measure = meal[`strMeasure${i}`];
+            if (ingredient && ingredient.trim() !== "") {
+                ingredients.push(`${measure} ${ingredient}`.trim());
+            }
+        }
+
+        const recipeDetails = {
+            name: meal.strMeal,
+            image: meal.strMealThumb || '',
+            ingredients: ingredients,
+            instructions: meal.strInstructions || 'No instructions available.',
+            video: meal.strYoutube || ''
+        };
+
+        res.status(200).json(recipeDetails);
+    } catch (error) {
+        console.error('Error fetching recipe details:', error.response ? error.response.data : error.message);
+        res.status(500).json({ error: 'Failed to fetch recipe details' });
+    }
+});
 
 app.get('/', (req, res) => {
     res.send('Welcome to my User Registration and Login API!');

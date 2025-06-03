@@ -73,7 +73,6 @@ body {
     font-weight: 600;
 }
 
-/* Стили для секции Health Tracker (Current/Target) */
 .health-tracker {
     margin-top: 60px;
 }
@@ -135,4 +134,91 @@ body {
 
 .button:hover {
     background-color: #45a049;
+}
+
+@media (max-width: 480px) {
+    .settings {
+        width: 90%;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    .settings h1 {
+        font-size: 36px;
+    }
+
+    .header-settings-account {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 40px;
+        text-align: center;
+    }
+
+    .header-settings-account img {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 10px;
+    }
+
+    .header-settings-account-settings {
+        margin-top: 40px;
+        gap: 30px;
+        width: 100%;
+    }
+
+    .left-settings {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .header-settings-account-settings .left-settings input {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .header-settings-account-settings .left-settings label {
+        font-size: 24px;
+    }
+
+    .health-tracker {
+        margin-top: 40px;
+    }
+
+    .columns {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .header {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+    .row {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 20px;
+    }
+
+    .label {
+        font-size: 24px;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .value-input {
+        width: 100%;
+    }
+
+    .button-container {
+        margin-top: 15px;
+    }
+
+    .button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
 }

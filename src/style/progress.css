@@ -23,7 +23,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* Activity Section */
 .activity h2 {
     font-size: 18px;
     font-weight: bold;
@@ -130,11 +129,10 @@ body {
     margin-right: 8px;
 }
 
-/* Weight Section */
+
 .weight .chart {
     width: 128px;
     height: 128px;
-    /*background: radial-gradient(circle, #facc15 0%, #facc15 60%, transparent 60%);*/
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -248,4 +246,129 @@ body {
     align-items: center;
     justify-content: center;
     gap: 20px;
+}
+
+@media (max-width: 480px) {
+    .container {
+        margin-left: 0;
+        padding-top: 100px;
+        margin-right: 0;
+        padding: 10px;
+    }
+
+    .section {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+
+    .activity h2 {
+        font-size: 16px;
+    }
+
+    .activity .chart {
+        height: 100px;
+    }
+
+    .activity .bar div {
+        width: 24px;
+    }
+
+    .activity .bar .value {
+        font-size: 12px;
+        top: -16px;
+    }
+
+    .activity .bar span {
+        font-size: 10px;
+    }
+
+    .activity select {
+        font-size: 10px;
+    }
+
+    .activity .stats {
+        font-size: 12px;
+    }
+
+    .calories h2 {
+        font-size: 16px;
+    }
+
+    .calories .values {
+        margin-top: 15px;
+    }
+
+    .calories .current {
+        font-size: 24px;
+    }
+
+    .calories .message {
+        padding: 8px;
+    }
+
+    .weight .chart {
+        width: 100px;
+        height: 100px;
+    }
+
+    .weight .chart p {
+        font-size: 16px;
+    }
+
+    .weight .chart span {
+        font-size: 10px;
+    }
+
+    .achievements h2 {
+        font-size: 16px;
+    }
+
+    .achievements .items {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .achievements .item {
+        margin-bottom: 10px;
+    }
+
+    .achievements .item div {
+        width: 40px;
+        height: 40px;
+    }
+
+    .water h2 {
+        font-size: 16px;
+    }
+
+    .water .value {
+        font-size: 20px;
+    }
+
+    .water .progress {
+        width: 60px;
+        height: 60px;
+        font-size: 20px;
+    }
+
+    .grid-cols-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .header-progress {
+        margin-bottom: 40px;
+    }
+
+    .header-progress h1 {
+        font-size: 36px;
+    }
+
+    .header-progress p {
+        font-size: 16px;
+    }
+
+    .section-water-container {
+        flex-direction: column;
+        gap: 10px;
+    }
 }

@@ -181,7 +181,7 @@ const MealsComponent = () => {
                                         className="search-result"
                                         onClick={() => handleAddMealFromSearch(food)}
                                     >
-                                        {food.name})
+                                        {food.name}
                                     </div>
                                 ))}
                             </div>

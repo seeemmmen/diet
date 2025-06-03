@@ -59,6 +59,9 @@ header {
 .sidebar a {
     text-decoration: none;
     color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Центрируем содержимое ссылки */
 }
 
 .sidebar li i {
@@ -138,11 +141,6 @@ header {
     align-items: center;
     gap: 15px;
 }
-
-/*.app-user img {*/
-/*    width: 40px;*/
-/*    height: 40px;*/
-/*}*/
 
 .subheading {
     font-family: Urbanist, sans-serif;
@@ -369,19 +367,24 @@ header {
     font-family: Urbanist, sans-serif;
 }
 
-@media (max-width: 480px) {
+ @media (max-width: 480px) {
     .app-container {
         flex-direction: column;
     }
 
     .sidebar {
         width: 100%;
-        height: auto;
+        height: 70px;
         flex-direction: row;
         justify-content: space-around;
         padding: 10px 0;
-        position: relative;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        bottom: 0;
+        top: auto;
+        left: 0;
+        background-color: #fff;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
     }
 
     .sidebar .logo {
@@ -390,20 +393,52 @@ header {
 
     .sidebar ul {
         display: flex;
+        flex-direction: row;
         justify-content: space-around;
+        align-items: center;
         width: 100%;
+        margin-top: 0;
+        gap: 0;
     }
 
     .sidebar li {
-        padding: 10px;
+        padding: 5px 0;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .sidebar a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .sidebar li i {
+        font-size: 0;
+        margin-bottom: 0;
     }
 
     .sidebar li span {
-        font-size: 10px;
+        font-size: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .sidebar li span img {
+        width: 24px;
+        height: 24px;
+        margin: 0 auto;
     }
 
     .main-content {
         margin-left: 0;
+        margin-bottom: 70px;
     }
 
     .dashboard {

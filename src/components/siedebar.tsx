@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import logo from "../img/mainpage/logo.svg";
 import home from "../img/app/home.svg";
 import recipes from "../img/app/recipes.svg";
-import plan from "../img/app/plan.svg";
 import progress from "../img/app/progress.svg";
 
 
@@ -24,12 +23,6 @@ function Sidebar() {
                     <Link to="/app/recipes">
                         <i className="fas fa-utensils"></i>
                         <span><img src={recipes} alt=""/>Recipes</span>
-                    </Link>
-                </li>
-                <li>
-                    <Link to="/app/plan">
-                        <i className="fas fa-calendar-alt"></i>
-                        <span><img src={plan} alt=""/>My plan</span>
                     </Link>
                 </li>
                 <li>

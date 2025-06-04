@@ -111,6 +111,7 @@ function Settings() {
             if (!response.ok) throw new Error('Failed to save user info');
         } catch (error) {
             console.error(error);
+            throw error;
         }
     };
 
@@ -130,12 +131,31 @@ function Settings() {
             if (!response.ok) throw new Error('Failed to save health goals');
         } catch (error) {
             console.error(error);
+            throw error;
         }
     };
 
     const handleSave = async () => {
-        await saveUserInfo(userInfo);
-        await saveGoals(healthGoals);
+        try {
+            if (!userInfo.email || !/\S+@\S+\.\S+/.test(userInfo.email)) {
+                alert('Please enter a valid email');
+                return;
+            }
+
+            if (!healthGoals.current.weight || !healthGoals.target.weight) {
+                alert('Please fill in the weight fields');
+                return;
+            }
+
+            await saveUserInfo(userInfo);
+            alert('User information saved successfully');
+
+            await saveGoals(healthGoals);
+            alert('Health goals saved successfully');
+        } catch (error) {
+            console.error('Error saving data:', error);
+            alert('Failed to save data. Please try again.');
+        }
     };
 
     return (

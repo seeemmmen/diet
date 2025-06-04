@@ -108,6 +108,7 @@ body {
     padding: 8px 15px;
     cursor: pointer;
     border-bottom: 1px solid #eee;
+    font-family: Urbanist, sans-serif;
 }
 
 .search-result:last-child {

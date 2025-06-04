@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Sidebar from "./siedebar.tsx";
 import "../style/meals.css";
+import Loadingpage from "./Loadingpage.tsx";
 
 interface Meal {
     userEmail: string;
@@ -12,7 +13,6 @@ interface Meal {
 
 interface Food {
     name: string;
-    calories: number;
     image: string;
 }
 
@@ -36,7 +36,7 @@ const MealsComponent = () => {
         try {
             const token = localStorage.getItem("token");
             if (!token) {
-                setError("Необходимо войти в систему");
+                setError("Please log in to view meals");
                 setLoading(false);
                 return;
             }
@@ -50,14 +50,14 @@ const MealsComponent = () => {
             });
 
             if (!response.ok) {
-                throw new Error("Не удалось загрузить блюда");
+                throw new Error("Failed to load meals");
             }
 
             const mealsData = await response.json();
             setMeals(mealsData);
             setLoading(false);
         } catch (err) {
-            setError(err instanceof Error ? err.message : "Произошла ошибка");
+            setError(err instanceof Error ? err.message : "An error occurred");
             setLoading(false);
         }
     };
@@ -78,11 +78,11 @@ const MealsComponent = () => {
                     "Content-Type": "application/json",
                 },
             });
-            if (!response.ok) throw new Error("Не удалось найти блюда");
+            if (!response.ok) throw new Error("Failed to search food");
             const data = await response.json();
             setSearchResults(data);
         } catch (error) {
-            console.error("Ошибка поиска:", error);
+            console.error("Search error:", error);
             setSearchResults([]);
         }
     };
@@ -100,15 +100,15 @@ const MealsComponent = () => {
                 },
                 body: JSON.stringify({
                     name: food.name,
-                    calories: food.calories || 0,
+                    calories: 0,
                     image: food.image || "",
                 }),
             });
-            if (!response.ok) throw new Error("Не удалось добавить блюдо");
+            if (!response.ok) throw new Error("Failed to add meal");
             await fetchMeals();
             setSearchResults([]);
         } catch (error) {
-            console.error("Ошибка добавления блюда:", error);
+            console.error("Error adding meal:", error);
         }
     };
 
@@ -124,11 +124,11 @@ const MealsComponent = () => {
                     "Content-Type": "application/json",
                 },
             });
-            if (!response.ok) throw new Error("Не удалось загрузить детали рецепта");
+            if (!response.ok) throw new Error("Failed to load recipe details");
             const data = await response.json();
             setSelectedRecipe(data);
         } catch (error) {
-            console.error("Ошибка загрузки деталей рецепта:", error);
+            console.error("Error loading recipe details:", error);
             setSelectedRecipe(null);
         }
     };
@@ -147,73 +147,71 @@ const MealsComponent = () => {
         return match ? match[1] : null;
     };
 
-    if (loading) {
-        return <div className="text-center text-gray-500">Загрузка...</div>;
-    }
-
-    if (error) {
-        return <div className="text-center text-red-500">{error}</div>;
-    }
-
     return (
         <>
+            <Loadingpage loading={loading} />
             <Sidebar />
             <div className="content-recipes">
                 <div className="container">
-                    <div className="header-recipes">
-                        <h1>Recipes</h1>
-                        <p>Find and cook all recipes step by step</p>
-                    </div>
-                    <div className="search-bar">
-                        <input
-                            type="text"
-                            placeholder="Search by recipes, food and more"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            onKeyPress={(e) => e.key === "Enter" && handleSearch()}
-                            className="w-full max-w-md p-2 border rounded"
-                        />
-                        {searchResults.length > 0 && (
-                            <div className="search-results">
-                                {searchResults.map((food, index) => (
-                                    <div
-                                        key={index}
-                                        className="search-result"
-                                        onClick={() => handleAddMealFromSearch(food)}
-                                    >
-                                        {food.name}
-                                    </div>
-                                ))}
+                    {error && <div className="text-center text-red-500">{error}</div>}
+                    {!loading && !error && (
+                        <>
+                            <div className="header-recipes">
+                                <h1>Recipes</h1>
+                                <p>Find and cook all recipes step by step</p>
                             </div>
-                        )}
-                    </div>
-                    <div className="recipes">
-                        {meals.length === 0 ? (
-                            <p className="text-center text-gray-500">No meals found</p>
-                        ) : (
-                            meals.map((meal, index) => (
-                                <div
-                                    key={index}
-                                    className="recipe"
-                                    onClick={() => handleMealClick(meal)}
-                                >
-                                    <img
-                                        src={meal.image || "https://via.placeholder.com/250x130"}
-                                        alt={meal.name}
-                                        className="w-full h-32 object-cover rounded"
-                                    />
-                                    <h3>{meal.name}</h3>
-                                    <p>
-                                        Date: {new Date(meal.date).toLocaleDateString("en-GB", {
-                                        year: "numeric",
-                                        month: "long",
-                                        day: "numeric",
-                                    })}
-                                    </p>
-                                </div>
-                            ))
-                        )}
-                    </div>
+                            <div className="search-bar">
+                                <input
+                                    type="text"
+                                    placeholder="Search by recipes, food and more"
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    onKeyPress={(e) => e.key === "Enter" && handleSearch()}
+                                    className="w-full max-w-md p-2 border rounded"
+                                />
+                                {searchResults.length > 0 && (
+                                    <div className="search-results">
+                                        {searchResults.map((food, index) => (
+                                            <div
+                                                key={index}
+                                                className="search-result"
+                                                onClick={() => handleAddMealFromSearch(food)}
+                                            >
+                                                {food.name}
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                            <div className="recipes">
+                                {meals.length === 0 ? (
+                                    <p className="text-center text-gray-500">No meals found</p>
+                                ) : (
+                                    meals.map((meal, index) => (
+                                        <div
+                                            key={index}
+                                            className="recipe"
+                                            onClick={() => handleMealClick(meal)}
+                                        >
+                                            <img
+                                                src={meal.image || "https://via.placeholder.com/250x130"}
+                                                alt={meal.name}
+                                                className="w-full h-32 object-cover rounded"
+                                            />
+                                            <h3>{meal.name}</h3>
+                                            <p>
+                                                Date: {new Date(meal.date).toLocaleDateString("en-GB", {
+                                                year: "numeric",
+                                                month: "long",
+                                                day: "numeric",
+                                            })}
+                                            </p>
+                                        </div>
+                                    ))
+                                )}
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
 

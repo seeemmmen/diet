@@ -140,11 +140,11 @@ app.get('/api/user', verifyToken, async (req, res) => {
     try {
         const user = await User.findOne({ email: req.user.email });
         if (!user) {
-            return res.status(404).json({ error: 'Пользователь не найден' });
+            return res.status(404).json({ error: 'User not found' });
         }
         res.status(200).json({ username: user.username, email: user.email, name: user.name, phone: user.phone });
     } catch (error) {
-        res.status(500).json({ error: 'Внутренняя ошибка сервера' });
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
@@ -158,10 +158,18 @@ app.post('/api/user', verifyToken, async (req, res) => {
         user.email = req.body.email || user.email;
         user.name = req.body.name || user.name;
         user.phone = req.body.phone || user.phone;
-        await user.save();
 
-        res.status(200).json({ message: 'User data updated successfully' });
+        if (req.body.email && !/\S+@\S+\.\S+/.test(req.body.email)) {
+            return res.status(400).json({ error: 'Invalid email format' });
+        }
+
+        await user.save();
+        res.status(200).json({
+            message: 'User data updated successfully',
+            user: { username: user.username, email: user.email, name: user.name, phone: user.phone }
+        });
     } catch (error) {
+        console.error('Error updating user data:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
@@ -363,17 +371,60 @@ app.get('/api/health-goals', verifyToken, async (req, res) => {
 
 app.post('/api/health-goals', verifyToken, async (req, res) => {
     try {
-        const newGoals = new HealthGoals({
-            userEmail: req.user.email,
-            current: req.body.current || { weight: "Write please", water: "Write please", calories: "Write please" },
-            target: req.body.target || { weight: "Write please", water: "Write please", calories: "Write please" }
+        const { current, target } = req.body;
+
+        if (!current || !target) {
+            return res.status(400).json({ error: 'Current and target values are required' });
+        }
+
+        if (current.calories !== 'Write please' && isNaN(Number(current.calories))) {
+            return res.status(400).json({ error: 'Calories must be a number' });
+        }
+        if (target.calories !== 'Write please' && isNaN(Number(target.calories))) {
+            return res.status(400).json({ error: 'Target calories must be a number' });
+        }
+
+        let goals = await HealthGoals.findOne({ userEmail: req.user.email });
+
+        if (goals) {
+            goals.current = {
+                weight: current.weight || goals.current.weight,
+                water: current.water || goals.current.water,
+                calories: current.calories || goals.current.calories
+            };
+            goals.target = {
+                weight: target.weight || goals.target.weight,
+                water: target.water || goals.target.water,
+                calories: target.calories || goals.target.calories
+            };
+            goals.date = new Date();
+        } else {
+            goals = new HealthGoals({
+                userEmail: req.user.email,
+                current: {
+                    weight: current.weight || 'Write please',
+                    water: current.water || 'Write please',
+                    calories: current.calories || 'Write please'
+                },
+                target: {
+                    weight: target.weight || 'Write please',
+                    water: target.water || 'Write please',
+                    calories: target.calories || 'Write please'
+                }
+            });
+        }
+
+        await goals.save();
+        res.status(200).json({
+            message: 'Health goals updated successfully',
+            goals: { current: goals.current, target: goals.target }
         });
-        await newGoals.save();
-        res.status(200).json({ message: 'Health goals updated successfully' });
     } catch (error) {
+        console.error('Error saving health goals:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
 app.get('/api/recipe-details', verifyToken, async (req, res) => {
     try {
         const mealName = req.query.name;
@@ -388,7 +439,6 @@ app.get('/api/recipe-details', verifyToken, async (req, res) => {
             return res.status(404).json({ error: 'Recipe not found' });
         }
 
-        // Extract ingredients and measurements
         const ingredients = [];
         for (let i = 1; i <= 20; i++) {
             const ingredient = meal[`strIngredient${i}`];

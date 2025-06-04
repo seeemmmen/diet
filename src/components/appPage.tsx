@@ -28,24 +28,39 @@ interface Activity {
 
 interface Food {
     name: string;
-    calories: number;
     image: string;
 }
 
+interface HealthGoals {
+    current: {
+        weight: string;
+        water: string;
+        calories: string;
+    };
+    target: {
+        weight: string;
+        water: string;
+        calories: string;
+    };
+}
+
 function AppPage() {
-    const [user, setUser] = useState<{ username: string; email: string ; name: string } | null>(null);
+    const [user, setUser] = useState<{ username: string; email: string; name: string } | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [progress, setProgress] = useState<Progress | null>(null);
     const [meals, setMeals] = useState<Meal[]>([]);
     const [waterCount, setWaterCount] = useState<number>(0);
     const [activity, setActivity] = useState<Activity[]>([]);
+    const [healthGoals, setHealthGoals] = useState<HealthGoals | null>(null);
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [searchResults, setSearchResults] = useState<Food[]>([]);
+    const [error, setError] = useState<string | null>(null);
 
     const fetchData = async () => {
         try {
             const token = localStorage.getItem("token");
             if (!token) {
+                setError("No authentication token found. Please log in.");
                 setLoading(false);
                 return;
             }
@@ -57,11 +72,9 @@ function AppPage() {
                     "Content-Type": "application/json",
                 },
             });
-
             if (!userResponse.ok) throw new Error("Failed to fetch user data");
             const userData = await userResponse.json();
             setUser(userData);
-            console.log(userData);
 
             const progressResponse = await fetch("/api/progress", {
                 method: "GET",
@@ -107,9 +120,21 @@ function AppPage() {
             const activityData = await activityResponse.json();
             setActivity(activityData);
 
+            const goalsResponse = await fetch("/api/health-goals", {
+                method: "GET",
+                headers: {
+                    Authorization: token,
+                    "Content-Type": "application/json",
+                },
+            });
+            if (!goalsResponse.ok) throw new Error("Failed to fetch health goals data");
+            const goalsData = await goalsResponse.json();
+            setHealthGoals(goalsData);
+
             setLoading(false);
         } catch (error) {
             console.error(error);
+            setError("Failed to load data. Please try again or log in.");
             setLoading(false);
         }
     };
@@ -171,7 +196,7 @@ function AppPage() {
                 },
                 body: JSON.stringify({
                     name: food.name,
-                    calories: food.calories,
+                    calories: 0,
                     image: food.image,
                 }),
             });
@@ -203,97 +228,101 @@ function AppPage() {
         plugins: { legend: { display: false } },
     };
 
+    const calorieProgress = healthGoals?.current?.calories && healthGoals?.target?.calories && parseFloat(healthGoals.target.calories) > 0
+        ? ((parseFloat(healthGoals.current.calories) / parseFloat(healthGoals.target.calories)) * 100).toFixed(0)
+        : '0';
+
     return (
         <div className="app-container">
             <Loadingpage loading={loading} />
             <Sidebar />
             <div className="main-content">
-                <h1 className="hello_h1">
-                    Hi, <span>{user?.name || "Guest"}!</span>
-                </h1>
-                <p className="subheading">Here's your personalized plan for today.</p>
-                <div className="search-bar">
-                    <input
-                        type="text"
-                        placeholder="Search by recipes, food and more"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        onKeyPress={(e) => e.key === "Enter" && handleSearch()}
-                    />
-                    {searchResults.length > 0 && (
-                        <div className="search-results">
-                            {searchResults.map((food, index) => (
-                                <div key={index} className="search-result" onClick={() => handleAddMealFromSearch(food)}>
-                                    {food.name} ({food.calories} kcal)
+                {error && <div className="error">{error}</div>}
+                {!loading && !error && (
+                    <>
+                        <h1 className="hello_h1">
+                            Hi, <span>{user?.name || "Guest"}!</span>
+                        </h1>
+                        <p className="subheading">Here's your personalized plan for today.</p>
+                        <div className="search-bar">
+                            <input
+                                type="text"
+                                placeholder="Search by recipes, food and more"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                onKeyPress={(e) => e.key === "Enter" && handleSearch()}
+                            />
+                            {searchResults.length > 0 && (
+                                <div className="search-results">
+                                    {searchResults.map((food, index) => (
+                                        <div key={index} className="search-result" onClick={() => handleAddMealFromSearch(food)}>
+                                            {food.name}
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
+                            )}
                         </div>
-                    )}
-                </div>
 
-                <div className="dashboard">
-                    {/* Today's Progress */}
-                    <div className="progress-section">
-                        <h3>Today's Progress</h3>
-                        <div className="calories">
-                            <span className="calories-icon">🔥</span>
-                            <span>{progress?.calories || 0}</span>
-                        </div>
-                        <div className="progress-circles">
-                            <div className="circle">
-                                <span>{progress?.fat || 0}%</span>
-                                <p>Fat</p>
+                        <div className="dashboard">
+                            <div className="progress-section">
+                                <h3>Today's Progress</h3>
+                                <div className="calories">
+                                    <span className="calories-icon">🔥</span>
+                                    <span>{healthGoals?.current?.calories || 'N/A'} / {healthGoals?.target?.calories || 'N/A'} kcal ({calorieProgress}%)</span>
+                                </div>
+                                <div className="progress-circles">
+                                    <div className="circle">
+                                        <span>{progress?.fat || 0}%</span>
+                                        <p>Fat</p>
+                                    </div>
+                                    <div className="circle">
+                                        <span>{progress?.protein || 0}%</span>
+                                        <p>Pro</p>
+                                    </div>
+                                    <div className="circle">
+                                        <span>{progress?.carbs || 0}%</span>
+                                        <p>Carb</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="circle">
-                                <span>{progress?.protein || 0}%</span>
-                                <p>Pro</p>
+
+                            <div className="activity-section">
+                                <h3>Activity</h3>
+                                <div className="activity-chart">
+                                    <Bar data={chartData} options={chartOptions} />
+                                </div>
                             </div>
-                            <div className="circle">
-                                <span>{progress?.carbs || 0}%</span>
-                                <p>Carb</p>
+
+                            <div className="meals-section">
+                                <h3>Today's Meals</h3>
+                                {meals.map((meal, index) => (
+                                    <div key={index} className="meal">
+                                        <span className="meal-icon">🍽️</span>
+                                        <span>{meal.name}</span>
+                                        <img src={meal.image} alt={meal.name} className="meal-image" />
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="water-section">
+                                <h3>Water</h3>
+                                <div className="water-counter">
+                                    {[...Array(8)].map((_, i) => (
+                                        <span key={i} className={i < waterCount ? "filled" : ""}>💧</span>
+                                    ))}
+                                    <button onClick={handleAddWater} className="add-button">+</button>
+                                </div>
+                            </div>
+
+                            <div className="weekly-progress">
+                                <h3>Track your Weekly Progress</h3>
+                                <Link to="/weekly-progress">
+                                    <button>View more</button>
+                                </Link>
                             </div>
                         </div>
-                    </div>
-
-                    {/* Activity */}
-                    <div className="activity-section">
-                        <h3>Activity</h3>
-                        <div className="activity-chart">
-                            <Bar data={chartData} options={chartOptions} />
-                        </div>
-                    </div>
-
-                    {/* Today's Meals */}
-                    <div className="meals-section">
-                        <h3>Today's Meals</h3>
-                        {meals.map((meal, index) => (
-                            <div key={index} className="meal">
-                                <span className="meal-icon">🍽️</span>
-                                <span>{meal.name}</span>
-                                <img src={meal.image} alt={meal.name} className="meal-image" />
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Water */}
-                    <div className="water-section">
-                        <h3>Water</h3>
-                        <div className="water-counter">
-                            {[...Array(8)].map((_, i) => (
-                                <span key={i} className={i < waterCount ? "filled" : ""}>💧</span>
-                            ))}
-                            <button onClick={handleAddWater} className="add-button">+</button>
-                        </div>
-                    </div>
-
-                    {/* Weekly Progress */}
-                    <div className="weekly-progress">
-                        <h3>Track your Weekly Progress</h3>
-                        <Link to="/weekly-progress">
-                            <button>View more</button>
-                        </Link>
-                    </div>
-                </div>
+                    </>
+                )}
             </div>
         </div>
     );

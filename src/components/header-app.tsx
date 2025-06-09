@@ -9,7 +9,7 @@ function HeaderApp() {
         <header className="app-header mobile-nav-header">
             <img src={logo} alt="Logo" onClick={()=>navigate("/app")} />
             <div className="app-user">
-                <Link to="/app/settings"><img src={avatar} alt=""/></Link>
+                <Link to="/app/settings"><img src={avatar} alt="" style={{width:"60px" , height:"60px"}}/></Link>
                 <LogoutButton />
             </div>
         </header>

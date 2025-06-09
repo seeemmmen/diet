@@ -168,7 +168,7 @@ function Settings() {
                     <>
                         <div className="header-settings-account">
                             <img src={avatar} alt="" />
-                            <div className="header-settings-account-info">
+                            <div className="header-settings-account-info" style={{marginLeft:"15px"}}>
                                 <p style={{ fontSize: "36px" }}>{user?.username || 'Guest'}</p>
                                 <p style={{ fontSize: "24px", color: "grey" }}>{user?.email || 'No email'}</p>
                             </div>

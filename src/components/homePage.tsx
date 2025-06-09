@@ -25,7 +25,7 @@ function HomePage() {
                             <p>Get Your Plan</p>
                         </button>
                         <img src={happyCustomers} alt="My Image" />
-                        <img src={people} alt="My Image" />
+                        <img src={people} alt="My Image" style={{marginLeft: "10px"}} />
                     </div>
                 </div>
                 <div className="bowl-eating">

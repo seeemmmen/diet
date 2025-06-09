@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {Link} from "react-router-dom"; // Добавляем useNavigate для управления переходами
+import {Link} from "react-router-dom";
 import logo from "../img/mainpage/logo.svg";
 import menu_nav from "../img/mainpage/menumav.svg";
 import closeIcon from "../img/mainpage/close-icon.svg";
@@ -38,7 +38,6 @@ function Header() {
                 <nav className="desktop-nav">
                     <Link to="/home" className="link hover-underline-animation">Home</Link>
                     <Link to="/features" className="link hover-underline-animation">Features</Link>
-                    <Link to="/articles" className="link hover-underline-animation">Articles</Link>
                     <Link to="/contact" className="link hover-underline-animation">Contact us</Link>
                     <Link to="/signup" className="link sign-up">Sign up</Link>
                 </nav>

@@ -47,7 +47,7 @@ function Quastions() {
                 'Authorization': token
             };
 
-            const response = await fetch('http://localhost:3000/api/answers', {
+            const response = await fetch('/api/answers', {
                 method: 'POST',
                 headers,
                 body: JSON.stringify({ [question]: answer }),

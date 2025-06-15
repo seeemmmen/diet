@@ -52,32 +52,39 @@ header {
     align-items: center;
     padding: 15px 0;
     cursor: pointer;
-    color: #333;
     transition: background-color 0.3s;
 }
 
 .sidebar a {
     text-decoration: none;
-    color: black;
+    color: #808080;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Центрируем содержимое ссылки */
+    align-items: center;
+    transition: color 0.3s;
 }
 
-.sidebar li i {
-    font-size: 20px;
-    margin-bottom: 5px;
+.sidebar li.active a {
+    color: #000;
 }
 
 .sidebar li span {
     font-family: Urbanist, sans-serif;
     font-size: 25px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .sidebar li span img {
-    font-family: Urbanist, sans-serif;
-    font-size: 25px;
-    margin-right: 10px;
+    width: 24px;
+    height: 24px;
+    filter: grayscale(100%) brightness(50%);
+    transition: filter 0.3s;
+}
+
+.sidebar li.active span img {
+    filter: none;
 }
 
 .main-content {
@@ -367,7 +374,7 @@ header {
     font-family: Urbanist, sans-serif;
 }
 
- @media (max-width: 480px) {
+@media (max-width: 480px) {
     .app-container {
         flex-direction: column;
     }
@@ -415,11 +422,11 @@ header {
         flex-direction: column;
         align-items: center;
         text-align: center;
+        color: #808080;
     }
 
-    .sidebar li i {
-        font-size: 0;
-        margin-bottom: 0;
+    .sidebar li.active a {
+        color: #000;
     }
 
     .sidebar li span {
@@ -434,6 +441,12 @@ header {
         width: 24px;
         height: 24px;
         margin: 0 auto;
+        filter: grayscale(100%) brightness(50%);
+        transition: filter 0.3s;
+    }
+
+    .sidebar li.active span img {
+        filter: none;
     }
 
     .main-content {

@@ -1,50 +1,84 @@
-# React + TypeScript + Vite
+# 🥗 Diet App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple and extensible diet tracking application built with Node.js, Express, and MongoDB. Users can register, log in, manage their profile, and track meals/products to support healthy eating habits.
 
-Currently, two official plugins are available:
+## 🚀 Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Backend**: Node.js, Express  
+- **Database**: MongoDB + Mongoose  
+- **Authentication**: JWT (JSON Web Tokens)  
+- **Validation**: Joi  
+- **Logging**: Morgan  
+- **Environment Config**: dotenv
 
-## Expanding the ESLint configuration
+## 📦 Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/seeemmmen/diet.git
+   cd diet
+Install dependencies:
 
-- Configure the top-level `parserOptions` property like this:
+bash
+Копировать
+Редактировать
+npm install
+Create a .env file based on the example:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+bash
+Копировать
+Редактировать
+cp .env.example .env
+Run the development server:
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+bash
+Копировать
+Редактировать
+npm run dev
+📌 Available Scripts
+npm run dev — Start the server in development mode using nodemon
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+npm start — Start the server in production mode
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+🛡️ API Endpoints
+Auth
+POST /api/auth/register – Register a new user
+
+POST /api/auth/login – Login and get a token
+
+User
+GET /api/user/profile – Get user profile
+
+PUT /api/user/profile – Update user profile
+
+Food / Meals
+POST /api/food – Add a food item
+
+GET /api/food – Get all food items
+
+DELETE /api/food/:id – Delete a specific item
+
+Note: Update the exact endpoints and payloads based on your current routes.
+
+📁 Project Structure
+bash
+Копировать
+Редактировать
+diet/
+│
+├── controllers/      # Route handlers
+├── middlewares/      # Authentication, error handlers, etc.
+├── models/           # Mongoose schemas
+├── routes/           # API route definitions
+├── utils/            # Helper functions
+├── .env.example      # Sample environment variables
+├── app.js            # Express app config
+└── server.js         # App entry point
+🧪 Features in Progress
+Calorie & macro tracking (proteins, fats, carbs)
+
+Daily/weekly nutrition stats and charts
+
+Frontend (React or Webflow)
+
+Multi-language support (i18n)
